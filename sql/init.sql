@@ -62,11 +62,11 @@ CREATE TABLE IF NOT EXISTS login_logs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='登录日志表';
 
 -- 创建应用用户（用于应用连接）
-CREATE USER IF NOT EXISTS 'warmmate'@'localhost' IDENTIFIED BY 'warmmate123@';
-GRANT ALL PRIVILEGES ON warm_mate.* TO 'warmmate'@'localhost';
+CREATE USER IF NOT EXISTS 'offermate'@'localhost' IDENTIFIED BY 'offermate123@';
+GRANT ALL PRIVILEGES ON offer_mate.* TO 'offermate'@'localhost';
 FLUSH PRIVILEGES;
 
 -- 允许远程连接的用户（生产环境请修改IP和密码）
-CREATE USER IF NOT EXISTS 'warmmate'@'%' IDENTIFIED BY 'warmmate123@';
-GRANT ALL PRIVILEGES ON warm_mate.* TO 'warmmate'@'%';
+CREATE USER IF NOT EXISTS 'offermate'@'%' IDENTIFIED BY 'offermate123@';
+GRANT ALL PRIVILEGES ON offer_mate.* TO 'offermate'@'%';
 FLUSH PRIVILEGES;
