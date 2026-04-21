@@ -1,7 +1,7 @@
 {
-  "name": "warm-mate-server",
+  "name": "offer-mate-server",
   "version": "1.0.0",
-  "description": "Warm-Mate Backend Server - User Account Management",
+  "description": "Offer-Mate Backend Server - Career Guidance Platform",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

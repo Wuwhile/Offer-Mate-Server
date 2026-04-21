@@ -1,0 +1,43 @@
+# 环境变量配置（包含敏感信息）
+.env
+.env.local
+.env.*.local
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 操作系统
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编译和构建
+dist/
+build/
+out/
+
+# 日志
+logs/
+*.log
+
+# 数据库备份
+*.sql
+!sql/*.sql
+
+# 临时文件
+tmp/
+temp/
+*.tmp

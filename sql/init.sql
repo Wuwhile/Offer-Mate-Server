@@ -1,7 +1,7 @@
 -- 创建数据库
-CREATE DATABASE IF NOT EXISTS warm_mate CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS offer_mate CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE warm_mate;
+USE offer_mate;
 
 -- 用户表
 CREATE TABLE IF NOT EXISTS users (

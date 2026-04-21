@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 Warm-Mate 服务器运行在 http://localhost:${PORT}`);
+  console.log(`🚀 Offer-Mate 服务器运行在 http://localhost:${PORT}`);
   console.log(`📍 API前缀: ${apiPrefix}`);
   console.log(`🌐 环境: ${process.env.NODE_ENV || 'development'}`);
 });
