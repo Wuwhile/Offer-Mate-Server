@@ -39,14 +39,48 @@ CREATE TABLE IF NOT EXISTS questionnaire_results (
 CREATE TABLE IF NOT EXISTS messages (
   id INT AUTO_INCREMENT PRIMARY KEY COMMENT '消息ID',
   user_id INT NOT NULL COMMENT '用户ID',
+  conversation_id INT NULL COMMENT '会话ID',
   content TEXT NOT NULL COMMENT '消息内容',
   message_type VARCHAR(20) DEFAULT 'text' COMMENT '消息类型',
   read_status INT DEFAULT 0 COMMENT '已读状态（0未读，1已读）',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   INDEX idx_user_id (user_id),
+  INDEX idx_conversation_id (conversation_id),
   INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息表';
+
+-- 会话表
+CREATE TABLE IF NOT EXISTS conversations (
+  id INT AUTO_INCREMENT PRIMARY KEY COMMENT '会话ID',
+  user_id INT NOT NULL COMMENT '用户ID',
+  title VARCHAR(100) COMMENT '会话标题',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_user_id (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会话表';
+
+-- 预约记录表
+CREATE TABLE IF NOT EXISTS appointments (
+  id INT AUTO_INCREMENT PRIMARY KEY COMMENT '预约ID',
+  user_id INT NOT NULL COMMENT '用户ID',
+  doctor_id VARCHAR(50) COMMENT '导师ID',
+  doctor_name VARCHAR(100) COMMENT '导师姓名',
+  patient_name VARCHAR(100) NOT NULL COMMENT '预约人姓名',
+  patient_age INT COMMENT '预约人年龄',
+  patient_gender VARCHAR(20) COMMENT '预约人性别',
+  patient_phone VARCHAR(20) NOT NULL COMMENT '联系电话',
+  consultation_content TEXT COMMENT '咨询内容描述',
+  urgency VARCHAR(20) COMMENT '紧急程度',
+  time_preference VARCHAR(50) COMMENT '期望时间',
+  status VARCHAR(20) DEFAULT 'pending' COMMENT '预约状态 (pending, confirmed, completed, cancelled)',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_user_id (user_id),
+  INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='预约记录表';
 
 -- 登录日志表
 CREATE TABLE IF NOT EXISTS login_logs (
