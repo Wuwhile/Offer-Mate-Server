@@ -103,8 +103,7 @@ exports.sendMessage = async (req, res) => {
         userId,
         conversationId,
         content: fullAIReply,
-        messageType: msgType,
-        fromUserId: 0  // AI 回复，fromUserId为0
+        messageType: 'ai'
       });
 
       // 更新对话的最后更新时间

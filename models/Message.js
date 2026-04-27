@@ -6,13 +6,13 @@ class Message {
    */
   static async create(messageData) {
     try {
-      const { userId, conversationId, content, messageType = 'text', fromUserId = 0 } = messageData;
+      const { userId, conversationId, content, messageType = 'text' } = messageData;
       const sql = `
-        INSERT INTO messages (user_id, conversation_id, from_user_id, content, message_type, created_at)
-        VALUES (?, ?, ?, ?, ?, NOW())
+        INSERT INTO messages (user_id, conversation_id, content, message_type, created_at)
+        VALUES (?, ?, ?, ?, NOW())
       `;
       
-      const [result] = await db.execute(sql, [userId, conversationId, fromUserId, content, messageType]);
+      const [result] = await db.execute(sql, [userId, conversationId, content, messageType]);
       
       return {
         id: result.insertId,
@@ -20,7 +20,7 @@ class Message {
         conversationId,
         content,
         messageType,
-        fromUserId,
+        fromUserId: messageType === 'ai' ? 0 : userId,
         createdAt: new Date()
       };
     } catch (error) {
@@ -46,7 +46,7 @@ class Message {
 
       // 获取此用户的分页消息数据（按创建时间降序）
       const sql = `
-        SELECT id, user_id, from_user_id as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
+        SELECT id, user_id, CASE WHEN message_type = 'ai' THEN 0 ELSE user_id END as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
         FROM messages
         WHERE user_id = ?
         ORDER BY created_at DESC
@@ -76,7 +76,7 @@ class Message {
   static async findById(messageId) {
     try {
       const sql = `
-        SELECT id, user_id, from_user_id as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
+        SELECT id, user_id, CASE WHEN message_type = 'ai' THEN 0 ELSE user_id END as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
         FROM messages
         WHERE id = ?
         LIMIT 1
@@ -153,7 +153,7 @@ class Message {
 
       // 获取分页数据
       const sql = `
-        SELECT id, user_id, conversation_id, from_user_id as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
+        SELECT id, user_id, conversation_id, CASE WHEN message_type = 'ai' THEN 0 ELSE user_id END as fromUserId, content as msgContent, message_type as msgType, read_status, created_at as time
         FROM messages
         WHERE conversation_id = ?
         ORDER BY created_at DESC
