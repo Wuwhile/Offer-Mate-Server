@@ -17,14 +17,13 @@ class QuestionnaireResult {
 
     const sql = `
       INSERT INTO questionnaire_results 
-      (user_id, type, questionnaire_name, questionnaire_type, score, depression_level, level_description, result_data)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      (user_id, questionnaire_name, questionnaire_type, score, depression_level, level_description, result_data)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     try {
       const [result] = await pool.execute(sql, [
         userId,
-        questionnaireType,
         questionnaireName,
         questionnaireType,
         score,
